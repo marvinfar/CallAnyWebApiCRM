@@ -1,0 +1,6 @@
+E:\MyProjects\CRM B2C-Projects\CallwebAPI\CallAnyWebApi\obj\Debug\CallAnyWebApi.csproj.CoreCompileInputs.cache
+E:\MyProjects\CRM B2C-Projects\CallwebAPI\CallAnyWebApi\obj\Debug\CallAnyWebApi.dll
+E:\MyProjects\CRM B2C-Projects\CallwebAPI\CallAnyWebApi\obj\Debug\CallAnyWebApi.pdb
+E:\MyProjects\CRM B2C-Projects\WFA_CallwebAPI\CallAnyWebApi\obj\Debug\CallAnyWebApi.csproj.CoreCompileInputs.cache
+E:\MyProjects\CRM B2C-Projects\WFA_CallwebAPI\CallAnyWebApi\obj\Debug\CallAnyWebApi.dll
+E:\MyProjects\CRM B2C-Projects\WFA_CallwebAPI\CallAnyWebApi\obj\Debug\CallAnyWebApi.pdb
