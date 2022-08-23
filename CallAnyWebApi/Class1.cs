@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Activities;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
@@ -11,6 +13,7 @@ using Microsoft.Xrm.Sdk.Workflow;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Extensions;
+using ApiLogger;
 
 namespace NewCallAnyWebApi
 {
@@ -72,6 +75,7 @@ namespace NewCallAnyWebApi
                 string value4 = entApiRetrieve.Contains("new_value4") ? entApiRetrieve["new_value4"].ToString().Trim() : "X";
 
                 string body = this.Body.Get<string>((ActivityContext)executionContext);
+                string bodyForLog = body;
                 bool isBodyJson = this.IsJson.Get<bool>((ActivityContext)executionContext);
                 bool flag = this.FindMode.Get<bool>((ActivityContext)executionContext);
                 string jsonPath = this.JsonPath.Get<string>((ActivityContext)executionContext);
@@ -121,7 +125,7 @@ namespace NewCallAnyWebApi
 
 
                 var strApiResult = CallApiMethod(endPoint, methodType, body, headers, isBodyJson);
-
+                
                 string strJsonPathValue = "";
                 if (flag)
                 {
@@ -134,9 +138,22 @@ namespace NewCallAnyWebApi
 
                 var stCode=GetJsonSelectedToken(strApiResult, "statusCode");
                 
+                //
+                var logger = new LogAction();
+                logger.SourceIp = Dns.GetHostName();
+                logger.verb = methodType;
+                logger.Url = entApiRetrieve["new_url"].ToString().Trim();
+                logger.Path = apiPath;
+                logger.RequestBody = bodyForLog;
+                logger.ResponseBody = strApiResult.ToString();
+                logger.Status = Int32.Parse(stCode);
+                //(bool,string) suc=logger.AddLog(logger);
+                logger.AddLog(logger);
+                
                 this.ResponseContent.Set((ActivityContext)executionContext, strApiResult);
                 this.JsonPathValue.Set((ActivityContext)executionContext, strJsonPathValue);
                 this.ResultStatusCode.Set((ActivityContext)executionContext, stCode);
+                
             }
             catch (Exception ex)
             {
